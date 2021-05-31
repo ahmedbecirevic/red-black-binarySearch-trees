@@ -15,6 +15,7 @@ public class BinarySearchTree <Key extends Comparable<Key>, Value>{
                 node = node.left;
                 numOfSearches++;
             } else {
+//                setNumOfSearches(1);
                 return node.value;
             }
         }
@@ -26,7 +27,7 @@ public class BinarySearchTree <Key extends Comparable<Key>, Value>{
     }
 
     private Node<Key, Value> put (Node<Key, Value> node, Key key, Value value) {
-        if (node == null) return new Node<Key, Value>(key, value);
+        if (node == null) return new Node<>(key, value);
 
         int compare = key.compareTo(node.key);
         if (compare < 0) {

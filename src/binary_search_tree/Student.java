@@ -1,6 +1,11 @@
 package binary_search_tree;
 
-public class Student {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Student implements Comparable<Student> {
+    private static final BinarySearchTree<Integer, Student> studentData = new BinarySearchTree<>();
     private int studentID;
     private String studentName;
     private String dateOfBirth;
@@ -17,6 +22,38 @@ public class Student {
         this.departmentCode = departmentCode;
         this.departmentName = departmentName;
         this.yearOfEnrollment = yearOfEnrollment;
+    }
+
+    public static void storeFileToArray(String filePath) throws FileNotFoundException {
+        int i = 0;
+
+        File file = new File(filePath);
+        Scanner readFile = new Scanner(file);
+
+        while(readFile.hasNextLine()) {
+            String[] line = readFile.nextLine().split(";");
+            studentData.put(Integer.parseInt(line[0]),
+                            new Student(Integer.parseInt(line[0]),
+                                                         line[1],
+                                                         line[2],
+                                                         line[3],
+                                                         line[4],
+                                                         line[5],
+                                                         Integer.parseInt(line[6])));
+        }
+        readFile.close();
+    }
+
+
+
+    @Override
+    public int compareTo(Student student) {
+        if (this.studentID > student.studentID) {
+            return 1;
+        } else if (this.studentID < student.studentID) {
+            return -1;
+        }
+        return 0;
     }
 
     public String getStudentName() {
