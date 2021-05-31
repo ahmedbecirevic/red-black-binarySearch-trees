@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Student implements Comparable<Student> {
-    private static final BinarySearchTree<Integer, Student> studentData = new BinarySearchTree<>();
     private int studentID;
     private String studentName;
     private String dateOfBirth;
@@ -23,28 +22,6 @@ public class Student implements Comparable<Student> {
         this.departmentName = departmentName;
         this.yearOfEnrollment = yearOfEnrollment;
     }
-
-    public static void storeFileToArray(String filePath) throws FileNotFoundException {
-        int i = 0;
-
-        File file = new File(filePath);
-        Scanner readFile = new Scanner(file);
-
-        while(readFile.hasNextLine()) {
-            String[] line = readFile.nextLine().split(";");
-            studentData.put(Integer.parseInt(line[0]),
-                            new Student(Integer.parseInt(line[0]),
-                                                         line[1],
-                                                         line[2],
-                                                         line[3],
-                                                         line[4],
-                                                         line[5],
-                                                         Integer.parseInt(line[6])));
-        }
-        readFile.close();
-    }
-
-
 
     @Override
     public int compareTo(Student student) {
@@ -110,5 +87,18 @@ public class Student implements Comparable<Student> {
 
     public void setStudentID(int studentID) {
         this.studentID = studentID;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentID=" + studentID +
+                ", studentName='" + studentName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", uniName='" + uniName + '\'' +
+                ", departmentCode='" + departmentCode + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", yearOfEnrollment=" + yearOfEnrollment +
+                '}';
     }
 }

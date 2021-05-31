@@ -1,6 +1,11 @@
 package binary_search_tree;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class BinarySearchTree <Key extends Comparable<Key>, Value>{
+    public static BinarySearchTree<Integer, Student> studentData = new BinarySearchTree<>();
     private Node<Key, Value> root;
     private int numOfSearches = 1;
 
@@ -10,12 +15,9 @@ public class BinarySearchTree <Key extends Comparable<Key>, Value>{
             int compare = key.compareTo(node.key);
             if (compare < 0) {
                 node = node.left;
-                numOfSearches++;
             } else if (compare > 0) {
-                node = node.left;
-                numOfSearches++;
+                node = node.right;
             } else {
-//                setNumOfSearches(1);
                 return node.value;
             }
         }
@@ -65,6 +67,26 @@ public class BinarySearchTree <Key extends Comparable<Key>, Value>{
     private Node<Key, Value> findMax (Node<Key, Value> node) {
         if (node.right == null) return node;
         return findMax(node.right);
+    }
+
+    public static void readFileToTree (String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner readFile = new Scanner(file);
+
+        while(readFile.hasNextLine()) {
+            String[] line = readFile.nextLine().split(";");
+            studentData.put(Integer.parseInt(line[0]),
+                    new Student( Integer.parseInt(line[0]),
+                            line[1],
+                            line[2],
+                            line[3],
+                            line[4],
+                            line[5],
+                            Integer.parseInt(line[6])
+                    )
+            );
+        }
+        readFile.close();
     }
 
     public void setNumOfSearches(int numOfSearches) {
