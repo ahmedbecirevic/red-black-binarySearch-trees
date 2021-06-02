@@ -1,8 +1,4 @@
-package binary_search_tree;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+package red_black_tree;
 
 public class Student implements Comparable<Student> {
     private int studentID;
@@ -13,7 +9,7 @@ public class Student implements Comparable<Student> {
     private String departmentName;
     private int yearOfEnrollment;
 
-    public Student (int studentID, String studentName, String dateOfBirth, String uniName, String departmentCode, String departmentName, int yearOfEnrollment) {
+    public Student(int studentID, String studentName, String dateOfBirth, String uniName, String departmentCode, String departmentName, int yearOfEnrollment) {
         this.studentID = studentID;
         this.studentName = studentName;
         this.dateOfBirth = dateOfBirth;

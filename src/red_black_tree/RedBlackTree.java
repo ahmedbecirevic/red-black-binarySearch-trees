@@ -1,12 +1,14 @@
-package binary_search_tree;
+package red_black_tree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class BinarySearchTree <Key extends Comparable<Key>, Value>{
-    public static BinarySearchTree<Integer, Student> studentData = new BinarySearchTree<>();
+public class RedBlackTree <Key extends Comparable<Key>, Value> {
+    public static RedBlackTree<Integer, Student> studentData = new RedBlackTree<>();
     private Node<Key, Value> root;
+    private static final boolean RED = true;
+    private static final boolean BLACK = false;
     public static int numOfSearches = 0;
 
     public Value get (Key key) {
@@ -26,48 +28,56 @@ public class BinarySearchTree <Key extends Comparable<Key>, Value>{
         return null;
     }
 
+    private Node<Key, Value> rotateLeft (Node<Key, Value> node) {
+        Node<Key, Value> x = node.right;
+        node.right = x.left;
+        x.left = node;
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    private Node<Key, Value> rotateRight (Node<Key, Value> node) {
+        Node<Key, Value> x = node.left;
+        node.left = x.right;
+        x.right = node;
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    private boolean isRed (Node<Key, Value> node) {
+        if (node == null) return false;
+        return node.color == RED;
+    }
+
+    private void flipColor (Node<Key, Value> node) {
+        node.left.color = BLACK;
+        node.right.color = BLACK;
+        node.color = RED;
+    }
+
     public void put (Key key, Value value) {
         root = put(root, key, value);
     }
 
     private Node<Key, Value> put (Node<Key, Value> node, Key key, Value value) {
-        if (node == null) return new Node<>(key, value);
-        int compare = key.compareTo(node.key);
-        if (compare < 0) {
+        if (node == null) return new Node<>(key, value, RED);
+
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
             node.left = put(node.left, key, value);
-        } else if (compare > 0) {
+        } else if (cmp > 0) {
             node.right = put(node.right, key, value);
         } else {
             node.value = value;
         }
-        node.size = 1 + size(node.left) + size(node.right);
+
+        if (isRed(node.right) && !isRed(node.left)) node = rotateLeft(node);
+        if (isRed(node.right) && isRed(node.left)) flipColor(node);
+        if (isRed(node.left)  && isRed(node.left.left)) node = rotateRight(node);
+
         return node;
-    }
-
-    public int size () {
-        return size(root);
-    }
-    private int size(Node<Key, Value> node) {
-        if (node == null) return 0;
-        return node.size;
-    }
-
-    public Key findMin () {
-        return findMin(root).key;
-    }
-
-    private Node<Key, Value> findMin (Node<Key, Value> node) {
-        if (node.left == null) return node;
-        return findMin(node.left);
-    }
-
-    public Key findMax () {
-        return findMax(root).key;
-    }
-
-    private Node<Key, Value> findMax (Node<Key, Value> node) {
-        if (node.right == null) return node;
-        return findMax(node.right);
     }
 
     public static void readFileToTree (String filePath) throws FileNotFoundException {
@@ -88,10 +98,6 @@ public class BinarySearchTree <Key extends Comparable<Key>, Value>{
             );
         }
         readFile.close();
-    }
-
-    public void setNumOfSearches(int numOfSearches) {
-        this.numOfSearches = numOfSearches;
     }
 
     public static int getNumOfSearches() {
