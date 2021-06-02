@@ -87,14 +87,12 @@ public class Student implements Comparable<Student> {
 
     @Override
     public String toString () {
-        return "Student{" +
-                "studentID=" + studentID +
-                ", studentName='" + studentName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", uniName='" + uniName + '\'' +
-                ", departmentCode='" + departmentCode + '\'' +
-                ", departmentName='" + departmentName + '\'' +
-                ", yearOfEnrollment=" + yearOfEnrollment +
-                '}';
+        return " studentID=" + studentID + "\n" +
+                ", studentName='" + studentName + "\n" +
+                ", dateOfBirth='" + dateOfBirth + "\n" +
+                ", uniName='" + uniName + "\n" +
+                ", departmentCode='" + departmentCode + "\n" +
+                ", departmentName='" + departmentName + "\n" +
+                ", yearOfEnrollment=" + yearOfEnrollment;
     }
 }

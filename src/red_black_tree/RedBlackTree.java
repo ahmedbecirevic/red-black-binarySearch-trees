@@ -9,11 +9,11 @@ public class RedBlackTree <Key extends Comparable<Key>, Value> {
     private Node<Key, Value> root;
     private static final boolean RED = true;
     private static final boolean BLACK = false;
-    public static int numOfSearches = 0;
+    public static int numOfSearches;
 
     public Value get (Key key) {
         Node<Key, Value> node = root;
-        numOfSearches = 0;
+        numOfSearches = 1;
         while (node != null) {
             numOfSearches++;
             int compare = key.compareTo(node.key);
